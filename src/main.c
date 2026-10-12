@@ -5,9 +5,14 @@
 #include "include/agb_debug/debug.c"
 #include <pokeagb/pokeagb.h>
 
+#define BITMAP_TABLE_ADDR 0x08800000
+#define INPUT_VAR 0x8002
+
 #define CPUFSCPY 0
 #define CPUFSSET 1
 #define CPUModeFS(size, mode) ((size >> 2) | (mode << 24))
+
+void **bitmap_table_addr = (void **)BITMAP_TABLE_ADDR;
 
 void exit_anim();
 
@@ -43,8 +48,10 @@ void main_c1_handler(){
 				u32 set = 0;
 				CpuFastSet((void*)&set, (void*)ADDR_VRAM, CPUModeFS(0x10000, CPUFSSET));
                 
+                u16 var8002 = var_load(INPUT_VAR);
+
                 //uncompress bitmap
-                lz77UnCompVram((void *)testBitmap, (void*)ADDR_VRAM);
+                lz77UnCompVram(bitmap_table_addr[var8002], (void*)ADDR_VRAM);
 				
 				super.multi_purpose_state_tracker++;
 			}
