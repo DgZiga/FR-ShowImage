@@ -1,8 +1,6 @@
 #ifndef MAIN_C
 #define MAIN_C
 
-#include "built_graphics/test.h"
-#include "include/agb_debug/debug.c"
 #include <pokeagb/pokeagb.h>
 
 #define BITMAP_TABLE_ADDR 0x08800000
